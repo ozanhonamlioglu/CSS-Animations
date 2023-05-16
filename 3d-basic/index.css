@@ -1,0 +1,20 @@
+body {
+    perspective: 500px;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    border: 0px;
+    background-color: gray;
+    font-size: 15px;
+    border-radius: 0px;
+    display: block;
+    margin: auto;
+    margin-top: 200px;
+    transition: transform 1s;
+}
+
+button:hover {
+    transform: rotateY(80deg);
+}
