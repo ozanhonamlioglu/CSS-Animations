@@ -1,0 +1,108 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    font-family: sans-serif;
+    /* perspective: 500px; */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+li {
+    margin: 10px 40px;
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 5px;
+    transition: all 0.5s;
+}
+
+span:first-child::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    left: 0;
+    top: 0;
+    border-top: 2px solid #c6c600;
+    border-left: 2px solid #c6c600;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+span:first-child::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    right: 0;
+    top: 0;
+    border-top: 2px solid #c6c600;
+    border-right: 2px solid #c6c600;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+span:last-child::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    left: 0;
+    bottom: 0;
+    border-bottom: 2px solid #c6c600;
+    border-left: 2px solid #c6c600;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+span:last-child::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    right: 0;
+    bottom: 0;
+    border-bottom: 2px solid #c6c600;
+    border-right: 2px solid #c6c600;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+a:hover span:first-child::before {
+    left: -10px;
+    top: -10px;
+    opacity: 1;
+}
+
+a:hover span:first-child::after {
+    right: -10px;
+    top: -10px;
+    opacity: 1;
+}
+
+a:hover span:last-child::before {
+    left: -10px;
+    bottom: -10px;
+    opacity: 1;
+}
+
+a:hover span:last-child::after {
+    right: -10px;
+    bottom: -10px;
+    opacity: 1;
+}
+
