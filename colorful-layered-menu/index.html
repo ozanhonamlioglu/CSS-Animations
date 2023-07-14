@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>
+            <a href="#" data-text="home">home</a>
+        </li>
+        <li>
+            <a href="#" data-text="about">about</a>
+        </li>
+        <li>
+            <a href="#" data-text="services">services</a>
+        </li>
+        <li>
+            <a href="#" data-text="team">team</a>
+        </li>
+    </ul>
+
+    <style>
+        body {
+            background-color: rgb(27,27,27);
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        ul li a {
+            text-decoration: none;
+            position: relative;
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 1px white;
+            font-size: 80px;
+            font-weight: 900;
+            text-transform:uppercase;
+            transition: 0.5s;
+        }
+
+        a::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: 0.5s;
+        }
+
+        a:hover::before {
+            color: rgb(187, 0, 0);
+            z-index: 1;
+            -webkit-text-stroke: 1px black;
+            transform: translate(10px, -10px);
+        }
+
+        a::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: 0.5s;
+        }
+
+        a:hover::after {
+            color: rgb(119, 239, 255);
+            z-index: 1;
+            -webkit-text-stroke: 1px black;
+            transform: translate(20px, -20px);
+        }
+
+        a:hover {
+            color: white;
+            -webkit-text-stroke: 1px black;
+        }
+    </style>
+</body>
+</html>

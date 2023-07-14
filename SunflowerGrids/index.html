@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="grid">
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+    
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+    
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+        </div>
+    </div>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid {
+            display: grid;
+            --col1: 1fr;
+            --col2: 1fr;
+            --col3: 1fr;
+            --row1: 1fr;
+            --row2: 1fr;
+            --row3: 1fr;
+
+            grid-template-rows: var(--row1) var(--row2) var(--row3);
+            grid-template-columns: var(--col1) var(--col2) var(--col3);
+            
+            width: 500px;
+            height: 500px;
+            transition: all .2s;
+        }
+
+        .cell {
+            border: 1px dashed black;
+            position: relative;
+            margin: 3px;
+            display: grid;
+            transition: all .2s;
+        }
+
+        .cell:where(:focus, :hover) {
+            scale: 1.1;
+            z-index: 1;
+        }
+
+        .grid:has(.cell:nth-child(3n+1):hover) {
+            --col1: 2fr;
+        }
+
+        .grid:has(.cell:nth-child(3n+2):hover) {
+            --col2: 2fr;
+        }
+
+        .grid:has(.cell:nth-child(3n+3):hover) {
+            --col3: 2fr;
+        }
+        
+        .grid:has(.cell:nth-child(n+1):nth-child(-n+3):where(:hover, :focus)) {
+            --row1: 2fr;
+        }
+
+        .grid:has(.cell:nth-child(n+4):nth-child(-n+6):where(:hover, :focus)) {
+            --row2: 2fr;
+        }
+        
+        .grid:has(.cell:nth-child(n+7):nth-child(-n+9):where(:hover, :focus)) {
+            --row3: 2fr;
+        }
+
+        .grid:nth-child(1) {
+            transform-origin: top left;
+        }
+
+        .grid:nth-child(2) {
+            transform-origin: top center;
+        }
+
+        .grid:nth-child(3) {
+            transform-origin: top right;
+        }
+
+        .grid:nth-child(4) {
+            transform-origin: left center;
+        }
+
+        .grid:nth-child(5) {
+            transform-origin: center center;
+        }
+
+        .grid:nth-child(6) {
+            transform-origin: right center;
+        }
+
+        .grid:nth-child(7) {
+            transform-origin: bottom left;
+        }
+
+        .grid:nth-child(8) {
+            transform-origin: bottom center;
+        }
+
+        .grid:nth-child(9) {
+            transform-origin: bottom right;
+        }
+    </style>
+    
+</body>
+</html>
