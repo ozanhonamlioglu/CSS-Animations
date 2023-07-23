@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app"></div>
+  <div id="perf">
+    <dl>
+      <dt>execution time</dt>
+      <dd class="exec-time">00:11</dd>
+    </dl>
+  </div>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    dt {
+      font-weight: bold;
+    }
+
+    #perf {
+      padding: 10px;
+    }
+
+    #app {
+      width: 500px;
+      height: 500px;
+      background-color: beige;
+      position: relative;
+    }
+
+    .particle {
+      width: 10px;
+      height: 10px;
+      border: 1px solid #000;
+      position: absolute;
+      border-radius: 10px;
+    }
+
+    .center {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: red;
+    }
+  </style>
+  
+  <script>
+    const app = document.getElementById("app");
+    const offsets = []
+
+    function spanParticle(size = 1) {
+
+      const start = window.performance.now();
+      for (let index = 0; index < size; index++) locateParticle();
+      const end = window.performance.now();
+
+      const execTime = (end - start)
+      document.getElementsByClassName("exec-time")[0].innerHTML = `${execTime} ms`
+    }
+
+    function locateParticle() {
+      const particle = createParticle();
+      app.appendChild(particle)
+
+      // control dots
+      const particleCenter = document.createElement("div");
+      particleCenter.classList.add("center")
+      app.appendChild(particleCenter);
+
+      const {left, top} = randomPositionForParticle(particleCenter);
+
+      particle.style.left = `${left}px`;
+      particle.style.top = `${top}px`
+    }
+
+    function randomPositionForParticle(particleCenter) {
+      const width = app.offsetWidth - 20;
+      const height = app.offsetHeight - 20;
+
+      const randomLeft = Math.floor(Math.random() * width);
+      const randomTop = Math.floor(Math.random() * height);
+
+      return preventCollision(randomLeft, randomTop, particleCenter);
+    }
+
+    function preventCollision(x, y, particleCenter) {
+      let left = x
+      let top = y;
+      const right = left + 10;
+      const bottom = top + 10;
+      const originX = left + 5;
+      const originY = top + 5;
+
+      particleCenter.style.left = `${originX}px`;
+      particleCenter.style.top = `${originY}px`
+
+      const listOfCollides = offsets.some(offset => {
+          if(
+            (offset.left < left && left < offset.right) ||
+            (right > offset.left && right < offset.right) ||
+            (offset.top < top && top < offset.bottom) ||
+            (bottom > offset.top && bottom < offset.bottom)
+          ) {
+            return offset;
+          }
+        }
+      )
+
+      if(listOfCollides) {
+        const newPos =  randomPositionForParticle(particleCenter);
+        left = newPos.left;
+        top = newPos.top;
+      } else {
+        offsets.push({
+        left,
+        right,
+        top,
+        bottom
+      });
+      }
+
+      return { left, top }
+    }
+
+    function createParticle() {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+
+      return particle;
+    }
+
+    (function() {
+      spanParticle(50);
+    })();
+
+  </script>
+
+</body>
+</html>

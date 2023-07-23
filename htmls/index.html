@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <p>
+      You can use <abbr title="cascading style sheet">css</abbr> (cascading style sheet) to style your <abbr>html</abbr> (hyper text markup language)
+    </p>
+    <div class="separate"></div>
+    <p>
+      contact to author of this page
+    </p>
+    <address>
+      <a href="mailto:ozanhonamlioglu@gmail.com">ozanhonamlioglu@gmail.com</a>
+    </address>
+    <div class="separate"></div>
+    <article class="forecast">
+      <h1>Weather Forecast</h1>
+      <article class="day-forecast">
+        <h2>03 March 2018</h2>
+        <p>rain.</p>
+      </article>
+    </article>
+    <div class="separate"></div>
+    <div>
+      <p>Salamanders are a group of amphibians with a lizard-like appearance, including short legs and a tail in both larval and adult forms.</p>
+      <aside>
+          <p>The Rough-skinned Newt defends itself with a deadly neurotoxin.</p>
+      </aside>
+      <p>Several species of salamander inhabit the temperate rainforest of the Pacific Northwest, including the Ensatina, the Northwestern Salamander and the Rough-skinned Newt. Most salamanders are nocturnal, and hunt for insects, worms and other small creatures.</p>
+    </div>
+    <div class="separate"></div>
+  </div>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    aside {
+      width: 40%;
+      padding-left: 0.5rem;
+      margin-left: 0.5rem;
+      float: right;
+      box-shadow: inset 5px 0 5px -5px #29627e;
+      font-style: italic;
+      color: #29627e;
+    }
+
+    aside > p {
+      margin: 0.5rem;
+    }
+
+    .forecast {
+      width: 300px;
+      padding: 0.3rem;
+      background-color: #eee;
+    }
+
+    .day-forecast {
+      background-color: #fff;
+      padding: 0.3rem;
+    }
+
+    .day-forecast h2 {
+      color: chocolate;
+      margin: 0;
+    }
+
+    .day-forecast p {
+      margin: 0;
+    }
+
+    .separate {
+      width: 100%;
+      height: 1px;
+      margin: 5px 0px 5px 0px;
+      background-color: #ddd;
+    }
+
+    abbr {
+      font-style: italic;
+      color: chocolate
+    }
+
+    address a {
+      text-decoration: none;
+      color:chocolate;
+    }
+  </style>
+</body>
+</html>

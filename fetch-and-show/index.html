@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="container">
+
+    <div id="grid">
+    </div>
+
+    <div id="loader">
+      <p>loading...</p>
+    </div>
+
+  </div>
+  
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      display: flex;
+      width: 100wv;
+      background: #fff;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #grid {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 1px;
+      row-gap: 1px;
+    }
+
+    .grid-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px dashed tomato;
+      padding: 5px;
+    }
+
+    .stick-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .stick-item div {
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+      background-color: red;
+    }
+
+    .stick-item span {
+      padding: 5px;
+    }
+  </style>
+
+  <script>
+    const baseUrl = "https://api.spacexdata.com/v3/cores";
+
+    let globalData = {}
+
+    /** PARENT ELEMENTS **/
+    const container = document.getElementById("container");
+    const grid = document.getElementById("grid");
+    const loader = document.getElementById("loader");
+
+    /** SERVICE STATUS LAYER **/
+    function showLoader() {
+      grid.style.display = "none"
+      loader.style.display = "block"
+    }
+
+    function hideLoader() {
+      grid.style.display = "grid"
+      loader.style.display = "none"
+    }
+
+    /** SERVICE LAYER **/
+    function parseData(data) {
+
+      const beautify = data.reduce((prev, next) => {
+        if(prev.hasOwnProperty(next.status)) prev[next.status] = [...prev[next.status], next]
+        else if (next.status) prev[next.status] = [next]
+
+        return prev;
+      }, {})
+
+      globalData = beautify;
+    }
+
+    async function fetchData() {
+      const response = await fetch(baseUrl);
+      const data = await response.json();
+      hideLoader();
+      parseData(data);
+      return data;
+    }
+    
+    /** RENDER LAYER **/
+    function render() {
+      const keys = Object.keys(globalData);
+      for (const key of keys) {
+        renderGridItems(key);
+      }
+    }
+
+    /** RENDER HELPERS LAYER **/
+    function renderGridItems(key) {
+      const gridItem = document.createElement("div")
+      gridItem.classList.add("grid-item");
+      grid.appendChild(gridItem);
+      renderTitles(gridItem, key);
+      renderStickItems(gridItem, key);
+    }
+
+    function renderTitles(element, key) {
+      const titleElement = document.createElement("h3");
+      titleElement.innerHTML = key
+      titleElement.style.textTransform = "uppercase"
+      element.appendChild(titleElement);
+    }
+
+    function renderStickItems(element, key) {
+      const data = globalData[key];
+      for (const item of data) {
+        const stickItem = document.createElement("div");
+        stickItem.classList.add("stick-item");
+        element.appendChild(stickItem)
+        renderWaterLandingIndicator(stickItem, item.water_landing);
+        renderCoreSerialNumbers(stickItem, item.core_serial);
+      }
+    }
+
+    function renderWaterLandingIndicator(element, canLandOnWater) {
+      const indicator = document.createElement("div");
+      element.appendChild(indicator);
+    }
+
+    function renderCoreSerialNumbers(element, serial) {
+      const serialText = document.createElement("span");
+      serialText.innerHTML = serial;
+      element.appendChild(serialText);
+    }
+
+    (async function() {
+      showLoader();
+      await fetchData();
+      render();
+    })()
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+
+    <div id="grid">
+      <div class="grid-item">
+        <div id="circle">
+          <div id="point"></div>
+        </div>
+      </div>
+
+      <div class="grid-item">
+        <div id="sin-dot"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <style>
+    :root {
+      --circleSize: 50px;
+      --canvasSize: 500px;
+      --turnSpeed: 1s;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #grid {
+      --pos: 40px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 200px;
+      top: var(--pos);
+      left: var(--pos)
+    }
+
+    #sin-dot {
+      --pointSize: 5px;
+      width: var(--pointSize);
+      height: var(--pointSize);
+      border-radius: calc(var(--pointSize) / 2);
+      background-color: chocolate;
+      position: absolute;
+      animation: sin-wave var(--turnSpeed) linear infinite;
+    }
+
+    .grid-item {
+      position: relative;
+      height: 100px;
+      width: 100px;
+    }
+
+    #circle {
+      width: var(--circleSize);
+      height: var(--circleSize);
+      border-radius: var(--circleSize);
+      border: 1px solid chocolate;
+      position: absolute;
+      animation: rock var(--turnSpeed) linear infinite;
+    }
+
+    @keyframes rock {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes sin-wave {
+      0%, 100% {
+        transform: translateY(calc(sin(90deg) * 0px));
+      }
+
+      50% {
+        transform: translateY(calc(sin(270deg) * -50px));
+      }
+    }
+
+    #point {
+      --pointSize: 5px;
+      width: var(--pointSize);
+      height: var(--pointSize);
+      background-color: red;
+      position: relative;
+      left: calc(var(--circleSize) / 2 - var(--pointSize) / 2);
+      border-radius: calc(var(--pointSize) / 2);
+      top: -3px
+    }
+
+    #app {
+      width: var(--canvasSize);
+      height: var(--canvasSize);
+      background-color: aliceblue;
+    }
+  </style>
+
+  <script>
+
+    function getRotationAngle(element) {
+      // Get the computed styles of the element
+      const styles = window.getComputedStyle(element);
+
+      // Get the transform property value
+      const transform = styles.transform;
+
+      // Extract the rotation angle from the transform property
+      if (transform && transform !== 'none') {
+        const values = transform.split('(')[1].split(')')[0].split(',');
+        const a = values[0];
+        const b = values[1];
+        const angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+        return angle;
+      }
+
+      // Return 0 if no rotation is applied
+      return 0;
+    }
+
+    function step() {
+      const circleElement = document.getElementById("circle");
+
+      const styles = window.getComputedStyle(circleElement);
+
+      // Get the transform property value
+      const transform = styles.transform;
+
+      const yPos = Math.abs(Math.sin((rotation * Math.PI) / 360) * 50);
+
+      const sinDotElement = document.getElementById("sin-dot");
+
+      sinDotElement.style.top = `${yPos}px`
+
+      console.log(yPos);
+
+      window.requestAnimationFrame(step)
+    }
+
+    // window.requestAnimationFrame(step)
+  </script>
+</body>
+</html>
